@@ -1,4 +1,3 @@
-loadstring([[
 local Players = game:GetService("Players")
 
 local function playAnimation(player)
@@ -16,12 +15,15 @@ local function playAnimation(player)
         local track = animator:LoadAnimation(animation)
         track:Play()
         
-        wait(10)
+        wait(10)  -- Espera 10 segundos
         
-        track:Stop()
+        track:Stop()  -- Para a animação
     end
 end
 
-local player = Players.LocalPlayer
-playAnimation(player)
-]])()
+for _, player in ipairs(Players:GetPlayers()) do
+    player.CharacterAdded:Connect(function(character)
+        wait(1)  -- Garantir que o personagem foi totalmente carregado
+        playAnimation(player)
+    end)
+end
